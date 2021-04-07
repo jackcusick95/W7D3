@@ -1,1 +1,14 @@
 <h1>Sign up user here</h1>
+
+<form action="<%=users_url%>" method="POST">
+    <%= auth_token %>
+    <label for="new_username">Username</label>
+    <input type="text" id="new_username" name="user[username]">
+
+    <br>
+
+    <label for="new_password">Password</label>
+    <input type="password" id="new_password" name="user[password]">
+
+    <input type="submit" name="Create user">
+</form>

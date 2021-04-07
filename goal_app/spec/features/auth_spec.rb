@@ -22,15 +22,33 @@ feature 'the signup process' do
 end
 
 feature 'logging in' do
-  scenario 'shows username on the homepage after login' do
-    visit users_url
-  end
+    subject(:user) do
+        FactoryBot.build(:user, username: 'a_username', password: 'password123')
+    end
+    before(:each) do 
+        user.save
+        visit new_session_url
+        fill_in 'Username', :with => 'a_username'
+        fill_in 'Password', :with => 'password123'
+        click_on "Log in"
+    end
+
+    scenario 'shows username on the homepage after login' do
+        visit users_url
+        expect(page).to have_content 'a_username'
+    end
 
 end
 
 feature 'logging out' do
-  scenario 'begins with a logged out state'
+  scenario 'begins with a logged out state' do 
+    visit users_url
+    expect(page).to have_selector("input[type=submit][value='Log in']")
+  end
 
-  scenario 'doesn\'t show username on the homepage after logout'
+  scenario 'doesn\'t show username on the homepage after logout' do
+    visit users_url
+    expect(page).to_not have_content 'Welcome'
+  end
 
 end

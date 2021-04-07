@@ -1,0 +1,24 @@
+<h1>Here are all the users!</h1>
+
+<% if logged_in? %>
+    <h2>Welcome <%=current_user.username%></h2>
+    <form action="<%=session_url%>" method="POST">
+        <%= auth_token %>
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" value="Sign out">
+    </form>
+<% else %>
+    <form action="<%=new_user_url%>" method="GET">
+        <%= auth_token %>
+        <input type="submit" value="Sign up">
+    </form>
+    <form action="<%=new_session_url%>" method="GET">
+        <%= auth_token %>
+        <input type="submit" value="Log in">
+    </form>
+  
+<% end %>
+
+<%@users.each do |user|%>
+    <%= user.username %>
+<% end %>
